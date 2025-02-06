@@ -11,8 +11,7 @@
  */
 
 /*@ <answer>
- *  Estudiante 1: Nombre y Apellidos
- *  Estudiante 2: Nombre y Apellidos
+ *  Estudiante 1: Pablo Pardo Cotos
  *@ </answer> */
 
 /*
@@ -211,23 +210,17 @@ void ListLinkedSingle::display(std::ostream &out) const {
 
 // Funcion que invierte los valores de una lista a partir de un indice y hasta una longitud
 void ListLinkedSingle::reverse_segment(int index, int length) {
-for(int i = length + index-1; i >= length - index; i--){
-      Node *current = nth_node(i);
-      int index_aux = length - i - 1;
-      Node *destino = nth_node(index_aux);
+   for(int i = 0; i < length/2; i++){
+      Node *current = nth_node(i + index);
+      Node *destino = nth_node(length + index - i - 1);
       int aux = current->value;
       current->value = destino->value;
       destino->value = aux;
+   }  
 }
-
-   /*for(int i = index; i < length; i++){
-      Node *current = nth_node(i);
-      Node *destino = nth_node(length + 1 + index - i);
-      int aux = current->value;
-      current->value = destino->value;
-      destino->value = aux;
-   }*/
-}
+// El coste asintótico de la funcion reverse_segment es lineal O(n) siendo n el tamaño de la lista
+// Ya que en el peor de los casos recorrerá la lista entera, pues está inviertiendo el orden de todo el vector
+// En el mejor de los casos, si la longitud es 0 ó 1, no hará nada, por lo que el coste será constante O(1)
 
 using namespace std;
 
