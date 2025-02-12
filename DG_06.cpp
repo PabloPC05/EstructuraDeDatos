@@ -48,9 +48,9 @@ public:
    
    void push_back(const int &elem);
 
-void reverse(){
-   reverse_segment(0, size());
-}
+   void reverse(){
+      reverse_segment(0, size());
+   }
    
    void pop_front() {
       assert (head != nullptr);
@@ -210,18 +210,35 @@ void ListLinkedSingle::display(std::ostream &out) const {
 }
 
 void ListLinkedSingle::reverse_segment(int index, int length) {
-   for(int i = 0; i < length/2; i++){
-      Node *current = nth_node(i + index);
-      Node *destino = nth_node(length + index - i - 1);
-      int aux = current->value;
-      current->value = destino->value;
-      destino->value = aux;
-   }  
+   Node *current = nth_node(index);
+   // Si la longitud a la que hay que darle la vuelta a la lista es menor o igual que 1
+   // Si el nodo actual es nulo (dado que esta fuera del rango de la lista)
+   // Si la lista es vacia (es decir que head == nullptr)
+   if (length <= 1 || !head || !current) return;
+   Node *prev = nth_node(index-1);
+   Node* segment_prev = prev;
+   Node* segment_start = current;
+   Node* next = nullptr;
+   // Invertir `length` nodos
+   for (int i = 0; i < length && current; i++) {
+       next = current->next;
+       current->next = prev;
+       prev = current;
+       current = next;
+   }
+   // Reconectar los segmentos
+   if (segment_prev) {
+       segment_prev->next = prev;
+   } else {
+       head = prev; // Si el segmento invertido incluía el primer nodo, actualizar `head`
+   }
+   segment_start->next = current;
 }
 
 void ListLinkedSingle::duplicate(){
     Node *current = head;
     while(current != nullptr){
+      // Creamos un nuevo nodo con el valor del nodo actual y el siguiente nodo 
         Node *new_node = new Node {current->value, current->next};
         current->next = new_node;
         current = new_node->next;
