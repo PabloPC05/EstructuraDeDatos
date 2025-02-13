@@ -88,6 +88,22 @@ public:
             prev = current;
             current = nextPair;
         }
+
+
+        // Correccion
+        Node* curent = head -> next; 
+        while(current != head && current->next != head){
+            Node* sale = current-> next;
+            //detach(sale); ::
+            sale->prev->next = sale->next;
+	        sale->next-> prev = sale->prev;
+            //attach(sale, current) ::
+            sale->prev = current->prev;
+	        sale->next = current;
+	        current->prev->next = sale;
+	        current->prev = sale;
+            current = current -> next;
+        }
     }
 };
 
