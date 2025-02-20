@@ -133,6 +133,7 @@ public:
   ListLinkedDouble split(int num);
   void display_reverse();
   void zip(ListLinkedDouble other);
+  void unzip(ListLinkedDouble& zs);
 
 private:
   Node *head;
@@ -303,6 +304,26 @@ void ListLinkedDouble::zip(ListLinkedDouble other){
   other.head->prev = other.head;
   other.num_elems = 0;
   num_elems += other.num_elems;
+}
+
+
+// Función que separa las posiciónes pares e impares de la lista
+void ListLinkedDouble::unzip(ListLinkedDouble& other){
+  Node* current = head->next;
+  int i = 0; // Variable que nos indica si la posición es par o impar
+  while(current != head){
+    Node*next = current->next;
+    // Si es impar se saca de la lista y se añade a la lista other
+    if(i%2==1){
+      // Desconectamos el nodo de la lista
+      detach(current);
+      // Añadimos el nodo a la lista other
+      other.push_back(current->value);
+    }
+    // Avanzamos en ambos índices
+    i++;
+    current = current->next;
+  }
 }
 
 #endif

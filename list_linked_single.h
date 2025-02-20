@@ -213,6 +213,7 @@ std::ostream &operator<<(std::ostream &out, const ListLinkedSingle &l) {
 
 // El coste asintótico de esta funcion es de O(n + m) donde n es el tamaño de la lista this y m el tamaño de la lista other
 void ListLinkedSingle::intersect(const ListLinkedSingle &other) {
+    // Si alguna de las dos listas es vacia
     if(head-> next == nullptr || other.head->next == nullptr) {
         head->next = nullptr;
         return;

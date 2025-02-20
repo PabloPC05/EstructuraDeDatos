@@ -1,8 +1,25 @@
 #include <cassert>
 #include <iostream>
-#include <fstream>
-#include "tHorarioTrenes.h"
+#include "tHora.h"
+#include <vector>
 using namespace std;
+
+int busquedaBinaria(const vector<tHora>& horarios, const tHora& consulta) {
+    int izquierda = 0, derecha = horarios.size() - 1;
+    while (izquierda <= derecha) {
+        int medio = izquierda + (derecha - izquierda) / 2;
+        if (horarios[medio] < consulta) {
+            izquierda = medio + 1;
+        } else {
+            derecha = medio - 1;
+        }
+    }
+    if (izquierda < horarios.size()) {
+        return izquierda;
+    } else {
+        return -1;
+    }
+}
 
 bool resuelveCaso() {
     int nTrenes, nConsultas;
@@ -10,20 +27,20 @@ bool resuelveCaso() {
     if (nTrenes == 0 && nConsultas == 0) {
         return false;
     }
-    tHorarioTrenes trenes;
-    inicia(trenes);
+    vector<tHora> trenes;
+    trenes.clear();
     for (int i = 0; i < nTrenes; i++) {
         tHora h;
         cin >> h;
-        inserta(trenes, h);
+        trenes.push_back(h);
     }
+
     for (int i = 0; i < nConsultas; i++) {
-        tHora h, sig;
+        tHora h;
         cin >> h;
-        if (busca(trenes, h, sig))
-            cout << sig << '\n';
-        else
-            cout << "NO\n";
+        int indice = busquedaBinaria(trenes, h);
+        if(indice == -1 ) cout << "NO\n";
+        else cout << trenes[indice] << '\n';   
     }
     cout << "---\n";
     return true;
