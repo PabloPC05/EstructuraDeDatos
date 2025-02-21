@@ -109,6 +109,7 @@ public:
     void display(std::ostream& out) const;
 
     void display() const { display(std::cout); }
+    int eliminarSaltando(const int& Q);
 
 private:
     Node* head;
@@ -176,6 +177,33 @@ template <typename T>
 std::ostream& operator<<(std::ostream& out, const ListLinkedDouble<T>& l) {
     l.display(out);
     return out;
+}
+
+template <typename T> 
+int ListLinkedDouble<T>::eliminarSaltando(const int& Q){
+    // Tomamos un nodo auxiliar que almacenará el nodo a elimianr
+    Node* to_delete = head->next;
+    Node* indice = to_delete;
+    while(num_elems != 1){
+        // Realizamos los sucesivos saltos hasta llegar al nodo a eliminar
+        for(int i = 0; i < Q; i++){
+            // Tomamos el siguiente
+            indice = indice->next;
+            // Si hemos llegado al fin de la lista, volvemos a empezar
+            if(indice == head) indice = indice->next;
+        }
+        to_delete = indice;
+        indice = indice->next;
+        if(indice == head) indice = indice->next;
+        // Una vez ya tenemos el nodo que queremos eliminar, lo tenemos que sacar de la lista
+        to_delete->prev->next = to_delete->next;
+        to_delete->next->prev = to_delete->prev;
+        // Eliminamos el nodo
+        delete to_delete;
+        // Actualizamos el número de elementos
+        num_elems--;
+    }
+    return indice->value;
 }
 
 #endif

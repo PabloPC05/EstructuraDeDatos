@@ -2,18 +2,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "list_linked_double.h"
+#include "queue_linkedlist.h"
 using namespace std;
 
 bool resuelveCaso(){
-    int num_alumnos, saltos; 
-    cin >> num_alumnos >> saltos; 
-    if(num_alumnos == 0 && saltos == 0) return false; 
-    ListLinkedDouble<int> alumnos; 
-    for(int i = 1; i <= num_alumnos; i++){
-        alumnos.push_back(i);
-    }
-    cout << alumnos.eliminarSaltando(saltos) << endl;
+    int num;
+    cin >> num;
+    if(num == 0) return false; 
+    QueueLinkedList<int> cola; 
+    
     return true;
 }
 
