@@ -49,6 +49,37 @@ bool resuelveCaso() {
     return true;
 }
 
+
+//Correccion
+/*
+    bool resuelveCaso(){
+    string line; 
+    getline(line, cin);
+    if(!cin) return false;
+    list<char> l;
+    auto it = l.end();
+    for(char c : line){
+    switch(c){
+        case '+':
+            it = l.end();
+            break;
+        case '-':
+            it = l.begin();
+            break;
+        case '*':
+            if(it != l.end()) ++it;
+            break;
+        case '3':
+            if(it != l.end()) it = l.erase(it);
+            break;
+        default:
+            it = l.insert(it, c);
+            ++it;
+    }
+    return true; 
+    }
+*/
+
 int main() {
     #ifndef DOMJUDGE
     std::ifstream in("casos.txt");

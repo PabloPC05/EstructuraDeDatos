@@ -110,6 +110,39 @@ public:
 
     void display() const { display(std::cout); }
     int eliminarSaltando(const int& Q);
+    T elem(Node* n);
+    Node* advance(Node* n);
+    class reverse_iterator{
+        private:
+            Node* current;
+            Node* head;
+            reverse_iterator(Node* h, Node* n) : head(h), current(n) {}
+        public:
+        friend class ListLinkedDouble;
+        T elem()const {return current->value;}
+
+        void advance(){
+            current = current->prev;
+        }
+
+        T elem(Node* n){
+            return n->value;
+        }
+
+        bool operator!=(const reverse_iterator& other) const {return current != other.current;}
+    };
+
+    reverse_iterator rbegin(){
+        return reverse_iterator(head, head->prev);
+    }
+    
+    reverse_iterator rend(){
+        return reverse_iterator(head, head);
+    }
+
+
+
+    void reverse();
 
 private:
     Node* head;
@@ -204,6 +237,21 @@ int ListLinkedDouble<T>::eliminarSaltando(const int& Q){
         num_elems--;
     }
     return indice->value;
+}
+
+template <typename T>
+void ListLinkedDouble<T>::reverse(){
+    Node* current = head->next;
+    Node* aux;
+    while(current != head){
+        aux = current->next;
+        current->next = current->prev;
+        current->prev = aux;
+        current = aux;
+    }
+    aux = head->next;
+    head->next = head->prev;
+    head->prev = aux;
 }
 
 #endif
