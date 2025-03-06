@@ -55,6 +55,12 @@
         "iomanip": "cpp",
         "vector": "cpp",
         "algorithm": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "queue": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "stack": "cpp"
     }
 }
