@@ -6,14 +6,10 @@
 #include "bintree_2.h"
 using namespace std;
 
+
 void resuelveCaso(){
-    BinTree<char> t = read_tree<char>(cin);
-    if(t.esCompleto()){
-        cout << "SI" << endl;
-    }
-    else{
-        cout << "NO" << endl;
-    }
+    BinTree<char> arbol = read_tree<char>(cin);
+    cout << arbol.diameter() << endl;
 }
 
 int main() {
@@ -28,7 +24,6 @@ int main() {
     std::cin.rdbuf(cinbuf);
     system("PAUSE");
     #endif
-    
     return 0;
 }
     
