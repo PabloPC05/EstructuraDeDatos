@@ -101,16 +101,16 @@ int diameter() const {
 }
 
 
-bool es_estable() const{
+bool es_equilibrado() const{
   if(empty()) return true;
   if(left().empty() && right().empty()) return true;
   if(left().empty() && !right().empty()) return right().altura() <= 1;
   if(!left().empty() && right().empty()) return left().altura() <= 1;
-  return left().es_estable() && right().es_estable() && std::abs(left().altura() - right().altura()) <= 1;
+  return left().es_equilibrado() && right().es_equilibrado() && std::abs(left().altura() - right().altura()) <= 1;
 }
 
-bool es_equilibrado const{
-  
+bool es_estable() const {
+  return es_estable_aux(root_node);
 }
 
 private:
@@ -131,6 +131,31 @@ private:
   };
 
   NodePointer root_node;
+
+  
+bool es_estable_aux(NodePointer root) const {
+  // Si el árbol es vacío devolvemos true
+  if (root == nullptr) return true;
+  // Si el árbol es una hoja devolvemos true
+  if (root->left == nullptr && root->right == nullptr) return true;
+  // Si el árbol tiene un hijo a la izquierda y no tiene hijo a la derecha
+  if (root->left != nullptr) {
+      NodePointer aux = root->left;
+      root->left = nullptr;
+      bool equilibrado = es_equilibrado();
+      root->left = aux;
+      if (!equilibrado) return false;
+  }
+  // Si el árbol tiene un hijo a la derecha y no tiene hijo a la izquierda
+  if (root->right != nullptr) {
+      NodePointer aux = root->right;
+      root->right = nullptr;
+      bool equilibrado = es_equilibrado();
+      root->right = aux;
+      if (!equilibrado) return false;
+  }
+  return es_estable_aux(root->left) && es_estable_aux(root->right);
+}  
 
   static void display_node(const NodePointer &root, std::ostream &out) {
     if (root == nullptr) {
