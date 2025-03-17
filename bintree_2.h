@@ -113,6 +113,16 @@ bool es_estable() const {
   return es_estable_aux(root_node);
 }
 
+int numNodos() const {
+  if(empty()) return 0;
+  return 1 + left().numNodos() + right().numNodos();
+}
+
+int min_num_nodos_infectados() const {
+  return min_num_nodos_infectados(root_node);
+}
+
+
 private:
   // Las definiciones de TreeNode y NodePointer dependen recursivamente
   // la una de la otra. Por eso declaro 'struct TreeNode;' antes de NodePointer
@@ -132,31 +142,6 @@ private:
 
   NodePointer root_node;
 
-  
-bool es_estable_aux(NodePointer root) const {
-  // Si el árbol es vacío devolvemos true
-  if (root == nullptr) return true;
-  // Si el árbol es una hoja devolvemos true
-  if (root->left == nullptr && root->right == nullptr) return true;
-  // Si el árbol tiene un hijo a la izquierda y no tiene hijo a la derecha
-  if (root->left != nullptr) {
-      NodePointer aux = root->left;
-      root->left = nullptr;
-      bool equilibrado = es_equilibrado();
-      root->left = aux;
-      if (!equilibrado) return false;
-  }
-  // Si el árbol tiene un hijo a la derecha y no tiene hijo a la izquierda
-  if (root->right != nullptr) {
-      NodePointer aux = root->right;
-      root->right = nullptr;
-      bool equilibrado = es_equilibrado();
-      root->right = aux;
-      if (!equilibrado) return false;
-  }
-  return es_estable_aux(root->left) && es_estable_aux(root->right);
-}  
-
   static void display_node(const NodePointer &root, std::ostream &out) {
     if (root == nullptr) {
       out << ".";
@@ -167,6 +152,40 @@ bool es_estable_aux(NodePointer root) const {
       display_node(root->right, out);
       out << ")";
     }
+  }
+
+
+  int min_num_nodos_infectados(NodePointer root) const {
+    int num_infectados_izq = 0;
+    int num_infectados_der = 0;
+    if (root->left == nullptr && root->right == nullptr) return 1;
+    if (root->left != nullptr) num_infectados_izq += min_num_nodos_infectados(root->left);
+    if (root->right != nullptr) num_infectados_der += min_num_nodos_infectados(root->right);
+    return 1 + std::min(num_infectados_izq, num_infectados_der);
+  }
+
+  bool es_estable_aux(NodePointer root) const {
+    // Si el árbol es vacío devolvemos true
+    if (root == nullptr) return true;
+    // Si el árbol es una hoja devolvemos true
+    if (root->left == nullptr && root->right == nullptr) return true;
+    // Si el árbol tiene un hijo a la izquierda y no tiene hijo a la derecha
+    if (root->left != nullptr) {
+        NodePointer aux = root->left;
+        root->left = nullptr;
+        bool equilibrado = es_equilibrado();
+        root->left = aux;
+        if (!equilibrado) return false;
+    }
+    // Si el árbol tiene un hijo a la derecha y no tiene hijo a la izquierda
+    if (root->right != nullptr) {
+        NodePointer aux = root->right;
+        root->right = nullptr;
+        bool equilibrado = es_equilibrado();
+        root->right = aux;
+        if (!equilibrado) return false;
+    }
+    return es_estable_aux(root->left) && es_estable_aux(root->right);
   }
 };
 

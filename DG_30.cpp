@@ -6,13 +6,11 @@
 #include "bintree_2.h"
 using namespace std;
 
+
 void resuelveCaso(){
-    BinTree<int> arbol = read_tree<int>(cin);
-    if(arbol.es_estable()){
-        cout << "SI" << endl;
-    }else{
-        cout << "NO" << endl;
-    }
+    BinTree<char> arbol = read_tree<char>(cin);
+    int n = arbol.numNodos() - arbol.min_num_nodos_infectados();
+    cout << n << endl;
 }
 
 int main() {
