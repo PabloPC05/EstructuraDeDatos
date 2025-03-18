@@ -19,6 +19,8 @@
 #include <cassert>
 #include <iostream>
 #include <memory>
+#include <algorithm>
+#include <vector>
 
 template <class T> class BinTree {
 public:
@@ -122,6 +124,38 @@ int min_num_nodos_infectados() const {
   return min_num_nodos_infectados(root_node);
 }
 
+
+static BinTree<T> reconstruir(std::vector<int> const& preorden, std::vector<int> const& inorden){
+  if(preorden.size() == 0) return BinTree<T>(); // Si el vector es vacío devolvemos un árbol vacío
+  int raiz = preorden[0]; // Por el orden en el que se recorren los nodos en el preorden sabemos que el primer elemento es la raíz
+  int pos_raiz = 0; // Buscamos la posición de la raíz en el inorden
+  while(inorden[pos_raiz] != raiz) pos_raiz++;  // Buscamos la posición de la raíz en el inorden
+  // Tomamos los elementos de la izquierda y de la derecha de la raíz en ambos recorridos
+  std::vector<int> preorden_izq(preorden.begin() + 1, preorden.begin() + pos_raiz + 1);
+  std::vector<int> preorden_der(preorden.begin() + pos_raiz + 1, preorden.end());
+  std::vector<int> inorden_izq(inorden.begin(), inorden.begin() + pos_raiz);
+  std::vector<int> inorden_der(inorden.begin() + pos_raiz + 1, inorden.end());
+  return BinTree<T>(reconstruir(preorden_izq, inorden_izq), raiz, reconstruir(preorden_der, inorden_der));
+}
+
+std::vector<int> perfil(){
+  std::vector<int> res; 
+  std::vector<bool> encontrado;
+  int nivel = 0;
+  perfil_aux(res, encontrado, nivel);
+  return res;
+}
+
+
+void perfil_aux(std::vector<int> res, std::vector<bool> encontrado, int nivel) const {
+  if(empty()) return;  //Si el arbol es vacío devolvemos un vector vacío
+  if(nivel >= res.size()) res.push_back(root()); // Si el nivel es mayor que el tamaño del vector, añadimos el nodo a la lista
+  if(!encontrado[nivel]) encontrado[nivel] = true; // Si no hemos encontrado un nodo en ese nivel, lo marcamos como encontrado
+  // Si tiene rama izquierda, vamos por ahi 
+  if(!left().empty()) left().perfil_aux(res, encontrado, nivel + 1);
+  // Luego veamos si tiene rama derecha que poder explorar
+  if(!right().empty()) right().perfil_aux(res, encontrado, nivel + 1);  
+}
 
 private:
   // Las definiciones de TreeNode y NodePointer dependen recursivamente
