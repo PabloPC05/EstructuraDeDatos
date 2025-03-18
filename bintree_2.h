@@ -21,6 +21,8 @@
 #include <memory>
 #include <algorithm>
 #include <vector>
+#include <limits>
+#include <string>
 
 template <class T> class BinTree {
 public:
@@ -138,24 +140,39 @@ static BinTree<T> reconstruir(std::vector<int> const& preorden, std::vector<int>
   return BinTree<T>(reconstruir(preorden_izq, inorden_izq), raiz, reconstruir(preorden_der, inorden_der));
 }
 
-std::vector<int> perfil(){
-  std::vector<int> res; 
-  std::vector<bool> encontrado;
-  int nivel = 0;
-  perfil_aux(res, encontrado, nivel);
-  return res;
+// Queremos priorizar la rama izquierda
+/*std::vector<int> perfil(int nivel = 1) {
+  std::vector<int> returnValue;
+  if(empty()) return returnValue;
+  returnValue.push_back(root());
+  std::vector<int> leftProfile = left().perfil(nivel + 1);
+  if(nivel >)
+}*/
+
+std::vector<T> perfil() {
+  std::vector<T> returnValue;
+  perfil(returnValue, 0);
+  return returnValue;
 }
 
 
-void perfil_aux(std::vector<int> res, std::vector<bool> encontrado, int nivel) const {
-  if(empty()) return;  //Si el arbol es vacío devolvemos un vector vacío
-  if(nivel >= res.size()) res.push_back(root()); // Si el nivel es mayor que el tamaño del vector, añadimos el nodo a la lista
-  if(!encontrado[nivel]) encontrado[nivel] = true; // Si no hemos encontrado un nodo en ese nivel, lo marcamos como encontrado
-  // Si tiene rama izquierda, vamos por ahi 
-  if(!left().empty()) left().perfil_aux(res, encontrado, nivel + 1);
-  // Luego veamos si tiene rama derecha que poder explorar
-  if(!right().empty()) right().perfil_aux(res, encontrado, nivel + 1);  
+void perfil(std::vector<T>& perfil, int nivel){
+  if(empty()) return;
+  if(nivel == perfil.size()) perfil.push_back(root());
+  left().perfil(perfil, nivel + 1);
+  right().perfil(perfil, nivel + 1);
 }
+
+std::string maxString(size_t length) {
+  return std::string(length, '\xFF'); // Crea un string con 'length' caracteres '\xFF'
+}
+
+
+
+bool es_de_busqueda(T minVal, T maxVal) const {
+  return es_de_busqueda_aux(root_node, minVal, maxVal);
+}
+
 
 private:
   // Las definiciones de TreeNode y NodePointer dependen recursivamente
@@ -176,6 +193,14 @@ private:
 
   NodePointer root_node;
 
+  static bool es_de_busqueda_aux(const NodePointer& node, T minVal, T maxVal)  {
+    // Si el arbol es vacío o es una hoja devolvemos verdadero
+    if (node == nullptr) return true;
+    // Si el nodo actual es mayor que el valor máximo o menor que el valor mínimo devolvemos falso
+    if (node->elem <= minVal || node->elem >= maxVal) return false;
+    return es_de_busqueda_aux(node->left, minVal, node->elem) && es_de_busqueda_aux(node->right, node->elem, maxVal);
+  }
+  
   static void display_node(const NodePointer &root, std::ostream &out) {
     if (root == nullptr) {
       out << ".";
@@ -187,7 +212,6 @@ private:
       out << ")";
     }
   }
-
 
   int min_num_nodos_infectados(NodePointer root) const {
     int num_infectados_izq = 0;
