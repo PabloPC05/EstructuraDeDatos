@@ -174,6 +174,8 @@ bool es_de_busqueda(T minVal, T maxVal) const {
 }
 
 
+
+
 private:
   // Las definiciones de TreeNode y NodePointer dependen recursivamente
   // la una de la otra. Por eso declaro 'struct TreeNode;' antes de NodePointer
