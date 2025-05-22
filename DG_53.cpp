@@ -19,7 +19,7 @@ class Libreria {
         map<int, list<string>> ventas_libro;
         unordered_map<string, list<string>::iterator> libro_iterador;
         int cantidadLibrosVendidos;
-    public: 
+    public:     
         Libreria() : libro_cantidad(), libro_ventas(), libro_iterador(), cantidadLibrosVendidos(0) {}
         void nuevoLibro(const string& libro, const int& cantidad){
             libro_cantidad[libro] += cantidad;
