@@ -1,6 +1,14 @@
-5
-(. 0 .)
-(((. 6 .) 3 (. 3 .)) 5 .)
-((((. 4 .) 6 ((. 1 .) 4 (. 5 .))) 3 ((. 1 .) 1 .)) 5 ((. 0 .) 7 (. 4 .)))
-((. 3 .) 2 (. 1.))
-.
+nueva_linea A
+nueva_linea A
+nueva_linea B
+nueva_estacion A Almeristan 10
+nueva_estacion A Almeristan 20
+nueva_estacion A Granadistan 10
+nueva_estacion A Almeristan 10
+eliminar_estacion Inexistan
+lineas_de Inexistan
+proxima_estacion A Almeristan
+proxima_estacion B Almeristan
+proxima_estacion C Almeristan
+proxima_estacion A Inexistan
+FIN
