@@ -1,0 +1,28 @@
+nueva_obra Autorretrato Goya 150
+nueva_obra Las_meninas Velazquez 90
+nueva_obra La_metamorfosis Dali 45
+nueva_obra Fiesta_en_Figueras Dali 45
+venta_obra La_metamorfosis
+nueva_obra La_venus_del_espejo Velazquez 120
+venta_obra Fiesta_en_Figueras
+mas_vendidos
+obras_por_antiguedad 2
+venta_obra Las_meninas
+mas_vendidos
+nueva_obra Biarritz Sorolla 80
+nueva_obra El_pie_herido Sorolla 50
+venta_obra Autorretrato
+mas_vendidos
+nueva_obra La_rendicion_de_Breda Velazquez 130
+nueva_obra Cosiendo_la_vela Sorolla 70
+nueva_obra Aquelarre Goya 100
+venta_obra El_pie_herido
+nueva_obra La_metamorfosis Dali 90
+obras_por_antiguedad 10
+venta_obra La_metamorfosis
+mas_vendidos
+FIN
+nueva_obra Autorretrato Goya 150
+venta_obra Las_meninas
+mas_vendidos
+FIN
