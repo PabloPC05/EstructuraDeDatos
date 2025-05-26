@@ -17,46 +17,62 @@
 #include <map>
 #include <list>
 #include <deque>
+#include <unordered_set>
+#include <map>
+using namespace std;
 
 using mesa = int;
 using plato = std::string;
 
-// Elige el tipo representante adecuado para el TAD restaurante e
-// implementa sus operaciones. Puedes añadir métodos o funciones privadas
-// si lo consideras conveniente. Justifica la elección de los tipos y el
-// coste de las operaciones.
-
 class restaurante {
 
-    // escribe aquí los atributos privados
+    using t_pedido = list<pair<mesa, plato>>::iterator;
+    unordered_map<mesa, map<plato, deque<t_pedido>>> mesas;
+    list<pair<mesa, plato>> pedidos;
 
 public:
     restaurante() {}
 
     void nueva_mesa(int num) { 
-
-
+        if(mesas.count(num)) throw domain_error("Mesa ocupada");
+        mesas.emplace(num, map<plato, deque<t_pedido>>());
     }
 
     void nuevo_pedido(int mesa, const std::string& plato) { 
-
-
+        if(!mesas.count(mesa)) throw domain_error("Mesa vacía");
+        pedidos.push_back({mesa, plato});
+        mesas[mesa][plato].push_back(--pedidos.end());
     }
 
     void cancelar_pedido(int mesa, const std::string& plato) { 
-
-
+        if(!mesas.count(mesa)) throw domain_error("Mesa vacía");
+        if(mesas[mesa][plato].empty()) throw domain_error("Producto no pedido por la mesa");
+        auto it = mesas[mesa][plato].back();
+        mesas[mesa][plato].pop_back();
+        pedidos.erase(it);
+        if(mesas[mesa][plato].empty()){
+            mesas[mesa].erase(plato);
+        }
     }
 
     std::pair<int, std::string> servir() { 
-
-
+        if(pedidos.empty()) throw domain_error("No hay pedidos pendientes");
+        auto mesa_plato = pedidos.front();
+        pedidos.pop_front();
+        mesas[mesa_plato.first][mesa_plato.second].pop_front();
+        if(mesas[mesa_plato.first][mesa_plato.second].empty()){
+            mesas[mesa_plato.first].erase(mesa_plato.second);
+        }
+        return mesa_plato;
     }
 
     std::vector<std::string> que_falta(int mesa) const { 
-
-
-    }
+        vector<string> result;
+            for(const auto& plato : mesas.at(mesa)){
+                result.push_back(plato.first);
+            }
+        return result;
+    }   
 };
 
 // No modificar el código a partir de aqui.
@@ -66,8 +82,7 @@ bool resuelveCaso() {
     std::string op;
     std::cin >> op;
 
-    if (!std::cin)
-        return false;
+    if (!std::cin)return false;
 
     while (op != "FIN") {
         try {
@@ -118,7 +133,7 @@ bool resuelveCaso() {
 
 int main() {
 #ifndef DOMJUDGE
-    std::ifstream in("sample3.txt");
+    std::ifstream in("casos.txt");
     auto cinbuf = std::cin.rdbuf(in.rdbuf());
 
 #endif
