@@ -1,0 +1,20 @@
+3
+Movistar 5 Valverde Mas Soler Cataldo Rojas
+JumboVisma 5 Roglic Bennett Dumoulin Gesink Martin
+Ineos 5 Bernal Amador Carapaz Castroviejo Rowe
+2
+15 50
+Valverde 10 Roglic 20 Carapaz 20 Soler 20 Mas 30
+Rojas 30 Bernal 30 Bennett 30 Rowe 30 Castroviejo 50
+Amador 50 Dumoulin 60 Gesink 60 Martin 60 Cataldo 60
+11 40
+Castroviejo 5 Carapaz 15 Valverde 15 Roglic 15 Mas 20
+Rojas 20 Bernal 20 Bennett 30 Rowe 30 Amador 50
+Soler 55
+1
+Movistar 3 Valverde Mas Soler
+2
+3 14
+Valverde 10 Mas 13 Soler 15
+2 15
+Mas 10 Valverde 11
