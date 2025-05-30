@@ -1,16 +1,4 @@
-altaMedico DrSanchez
-altaMedico DraFuentes
-pedirConsulta Pedro DraFuentes
-pedirConsulta Luis DrSanchez
-pedirConsulta Pedro DrSanchez
-siguientePaciente DrSanchez
-abandonarConsulta Pedro
-siguientePaciente DraFuentes
-FIN
-atenderConsulta DrDolittle
-altaMedico DrDolittle
-altaMedico DrDolittle
-pedirConsulta E.Murphy DrDolittle
-pedirConsulta E.Murphy DrDolittle
-siguientePaciente DrDolittle
-FIN
+3
+(((. 7 .) 7 .) 4 (((. 2 .) 5 (. 3 .)) 11 (. 1 .)))
+((. 0 .) 4 ((. 2 .) 3 (. 1 .)))
+((. 1 .) 3 .)
