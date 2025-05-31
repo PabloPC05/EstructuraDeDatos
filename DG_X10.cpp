@@ -13,35 +13,29 @@
 using namespace std;
 
 struct tSol{
-    int max_depth;
-    int completitud;
+    int max_altura_completo;
+    int altura_completo;
 };
 
 tSol completitud(const BinTree<char>& tree){
-    if(tree.empty()) return {0, 1};
-    else if(tree.left().empty() && tree.right().empty()){
-         return {1,1};
-    }
+    if(tree.empty()) return {0, 0};
+    else if(tree.left().empty() && tree.right().empty()) return {1,1};
     tSol left = completitud(tree.left());
     tSol right = completitud(tree.right());
-    int h = max(left.max_depth, right.max_depth) +1;
-    if(left.completitud == -1 || right.completitud == -1) return {h, -1};
-
-    else if(left.max_depth == right.max_depth && left.completitud == 1 && left.completitud == right.completitud) return {h, 1};
-
-    else if((left.max_depth == right.max_depth + 1) && left.completitud >= 0 && right.completitud == 1) return {h, 0};
-
-    else if((left.max_depth == right.max_depth) && left.completitud == 1 && right.completitud >= 0) return {h, 0};
-
-    else return {h , -1};
+    tSol result = {0,0};
+    if(left.altura_completo == right.altura_completo){
+        result.altura_completo = right.altura_completo + 1;
+    } else{
+        result.altura_completo = min(left.altura_completo, right.altura_completo) + 1;
+    }
+    result.max_altura_completo = max({left.max_altura_completo, right.max_altura_completo, result.altura_completo});
+    return result;
 }
 
 bool resuelveCaso() {
     BinTree<char> arbol = read_tree<char>(cin);
     tSol result = completitud(arbol);
-    if(result.completitud == 1) cout << "COMPLETO\n";
-    else if(result.completitud == 0) cout << "SEMICOMPLETO\n";
-    else cout << "NADA\n";
+    cout << result.max_altura_completo << '\n';
     return true;
 }
 

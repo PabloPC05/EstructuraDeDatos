@@ -126,6 +126,35 @@ public:
     else attach(current, next);
   }
 
+  void rotar_derecha() {
+  // cur apunta al prÃ³ximo elemento de posiciÃ³n impar en ser procesado
+  Node *cur = head->next;
+
+  // Si la lista es vacÃ­a no hacemos nada
+  if (cur != head) {
+    // Si no es vacÃ­a, desenganchamos el nodo cur
+    detach(cur);
+
+    // Mientras cur no sea el Ãºltimo o el penÃºltimo elemento
+    while (cur->next != head && cur->next->next != head) {
+      // Obtenemos el nodo que estÃ¡ dos posiciones despuÃ©s de cur
+      Node *sig = cur->next->next;
+      // Enganchamos cur antes de sig
+      attach(cur, sig);
+      // Y desenganchamos sig, que pasarÃ¡ a ser el nuevo 'cur'
+      detach(sig);
+      cur = sig;
+    }
+
+    // Cuando salimos del bucle, cur apunta al Ãºltimo elemento desenganchado
+    // Colocamos este elemento al principio de la lista    
+    attach(cur, head->next);
+
+    // No necesitamos modificar num_elems, ya que el nÃºmero de elementos
+    // de la lista no se altera.
+  }
+}
+
 private:
   // Cabeza de la lista
   Node *head;
